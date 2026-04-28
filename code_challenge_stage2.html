@@ -17,23 +17,45 @@
         textarea { flex: 1; background: #1a1a1a; color: #ce9178; border: 1px solid #444; padding: 10px; font-family: 'Consolas', monospace; font-size: 14px; resize: none; outline: none; border-radius: 4px; line-height: 1.4;}
         
         .controls { display: flex; justify-content: flex-end; align-items: center; padding-top: 12px; }
-        button { padding: 10px 24px; cursor: pointer; border-radius: 4px; border: none; font-weight: bold; font-size: 14px;}
+        button { padding: 10px 24px; cursor: pointer; border-radius: 4px; border: none; font-weight: bold; font-size: 14px; transition: background 0.2s;}
         
         #run-btn { background: #388e3c; color: white; }
         #run-btn:hover { background: #2e7d32; }
+        
+        /* Next Stage Button */
+        #next-btn { background: #2196f3; color: white; margin-left: 10px; display: none; }
+        #next-btn:hover { background: #1976d2; }
 
         /* Yellow Square Question Icon */
-        #quest-icon { position: absolute; top: 15px; right: 15px; font-size: 24px; cursor: pointer; background: #ffca28; color: #333; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px rgba(0,0,0,0.2); z-index: 100; border-radius: 4px; font-weight: bold; }
+        #quest-icon { 
+            position: absolute; 
+            top: 15px; 
+            right: 15px; 
+            font-size: 24px; 
+            cursor: pointer; 
+            background: #ffca28; 
+            color: #333; 
+            width: 44px; 
+            height: 44px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2); 
+            z-index: 100; 
+            border-radius: 4px; 
+            font-weight: bold; 
+        }
         
-        /* Modal */
+        /* Modal for Requirements */
         #modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 25px; border-radius: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.3); z-index: 200; width: 320px; color: #333; }
         #modal h3 { margin-top: 0; color: #d32f2f; }
         #overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 150; }
 
-        /* Success Message */
+        /* Success/Error Feedback */
         #status-area { margin-right: auto; display: flex; align-items: center;}
         #success-msg { display: none; color: #81c784; font-weight: bold; font-size: 15px;}
         #error-msg { display: none; color: #e57373; font-size: 14px;}
+        .star { color: #ffca28; margin-right: 5px; font-size: 18px;}
     </style>
 </head>
 <body>
@@ -56,7 +78,7 @@
                 <div class="card">
                     <img src="https://via.placeholder.com/150" alt="Icon">
                     <h3>Pro Plan</h3>
-                    <p>All the bells and whistles.</p>
+                    <p>All the extras.</p>
                 </div>
             </div>
         </div>
@@ -81,10 +103,11 @@
 }</textarea>
         <div class="controls">
             <div id="status-area">
-                <span id="success-msg">⭐ STAGE 2 COMPLETE! You fixed the grid!</span>
+                <span id="success-msg"><span class="star">⭐</span>STAGE 2 COMPLETE! You fixed the grid!</span>
                 <span id="error-msg">The layout is still broken. Check the display and widths!</span>
             </div>
             <button id="run-btn" onclick="runCode()">RUN CODE</button>
+            <button id="next-btn" onclick="goToStage3()">NEXT STAGE ➔</button>
         </div>
     </div>
 
@@ -113,7 +136,7 @@
             const code = document.getElementById('code-input').value;
             document.getElementById('user-styles').innerHTML = code;
 
-            // Logic to check if the student solved it
+            // Verification logic
             const isFlex = /display:\s*flex/i.test(code);
             const isWidthCorrect = /width:\s*250px/i.test(code);
             const noRedBorder = !/red/i.test(code);
@@ -121,10 +144,16 @@
             if (isFlex && isWidthCorrect && noRedBorder) {
                 document.getElementById('success-msg').style.display = 'flex';
                 document.getElementById('error-msg').style.display = 'none';
+                document.getElementById('next-btn').style.display = 'inline-block';
             } else {
                 document.getElementById('success-msg').style.display = 'none';
                 document.getElementById('error-msg').style.display = 'flex';
+                document.getElementById('next-btn').style.display = 'none';
             }
+        }
+
+        function goToStage3() {
+            window.location.href = "code_challenge_stage3.html";
         }
     </script>
 </body>
