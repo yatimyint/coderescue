@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Rescue: Mission Dashboard</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a1a;
+            color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            max-width: 600px;
+            text-align: center;
+            background: #2d2d2d;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border-top: 4px solid #ffca28; /* Matches your yellow icon */
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+            color: #ffca28;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: #aaa;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+        }
+
+        .briefing {
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: left;
+            margin-bottom: 30px;
+            border-left: 4px solid #388e3c;
+            line-height: 1.6;
+        }
+
+        .briefing h2 {
+            font-size: 18px;
+            margin-top: 0;
+            color: #81c784;
+        }
+
+        .start-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background-color: #388e3c;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(56, 142, 60, 0.3);
+        }
+
+        .start-btn:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(56, 142, 60, 0.4);
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="subtitle">Mission Protocol: Web Development</div>
+        <h1>CODE RESCUE</h1>
+        
+        <div class="briefing">
+            <h2>Incoming Mission:</h2>
+            <p>Our lead designer left halfway through a project, and the client's website is currently a disaster. We need a <strong>Frontend Specialist</strong> to dive into the code and fix the layout errors.</p>
+            <p>Your goal is simple: listen to the client's needs, fix the CSS, and bring the site back to life.</p>
+        </div>
+
+        <a href="code_challenge_stage1.html" class="start-btn">START MISSION</a>
+
+        <div class="footer">
+            Press the ❓ icon in each stage to view client requirements.
+        </div>
+    </div>
+
+</body>
+</html>
