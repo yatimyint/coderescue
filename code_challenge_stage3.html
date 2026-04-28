@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Fixer: Stage 3 - The Navigation Nightmare</title>
+    <style>
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; height: 100vh; overflow: hidden; background: #1e1e1e; color: #f0f0f0; }
+        
+        /* Top Half: The Website Preview */
+        #preview-container { flex: 1; background: #fff; position: relative; border-bottom: 2px solid #555; overflow: auto; min-height: 40vh;}
+        #preview-frame { padding: 0; transition: all 0.3s ease; }
+
+        /* Bottom Half: The Code Editor */
+        #editor-container { height: 45%; padding: 15px; display: flex; flex-direction: column; background: #2d2d2d; border-top: 1px solid #444;}
+        .editor-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; color: #aaa; font-size: 14px;}
+        textarea { flex: 1; background: #1a1a1a; color: #dcdcaa; border: 1px solid #444; padding: 10px; font-family: 'Consolas', monospace; font-size: 14px; resize: none; outline: none; border-radius: 4px; line-height: 1.4;}
+        
+        .controls { display: flex; justify-content: flex-end; align-items: center; padding-top: 12px; }
+        button { padding: 10px 24px; cursor: pointer; border-radius: 4px; border: none; font-weight: bold; font-size: 14px; transition: background 0.2s;}
+        
+        #run-btn { background: #388e3c; color: white; }
+        #run-btn:hover { background: #2e7d32; }
+
+        /* Finish Button */
+        #finish-btn { background: #ffca28; color: #333; margin-left: 10px; display: none; }
+        #finish-btn:hover { background: #ffd54f; }
+
+        /* Yellow Square Question Icon */
+        #quest-icon { 
+            position: absolute; 
+            top: 15px; 
+            right: 15px; 
+            font-size: 24px; 
+            cursor: pointer; 
+            background: #ffca28; 
+            color: #333; 
+            width: 44px; 
+            height: 44px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2); 
+            z-index: 100; 
+            border-radius: 4px; 
+            font-weight: bold; 
+        }
+        
+        /* Modal */
+        #modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 25px; border-radius: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.3); z-index: 200; width: 320px; color: #333; }
+        #modal h3 { margin-top: 0; color: #2c3e50; }
+        #overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 150; }
+
+        /* Status Area */
+        #status-area { margin-right: auto; display: flex; align-items: center;}
+        #success-msg { display: none; color: #81c784; font-weight: bold; font-size: 15px;}
+        #error-msg { display: none; color: #e57373; font-size: 14px;}
+        .star { color: #ffca28; margin-right: 5px; font-size: 18px;}
+    </style>
+</head>
+<body>
+
+    <div id="quest-icon" onclick="toggleModal()">❓</div>
+
+    <div id="preview-container">
+        <div id="preview-frame">
+            <style id="user-styles">
+                nav { background: #333; padding: 15px; }
+                ul { list-style-type: disc; color: white; padding-left: 20px; }
+                li { display: list-item; margin: 10px 0; font-weight: bold; }
+                .cta-button { background: gray; color: white; padding: 12px 24px; border: none; cursor: pointer; font-weight: bold; }
+            </style>
+            <nav>
+                <ul id="nav-list">
+                    <li>Home</li>
+                    <li>Services</li>
+                    <li>Contact</li>
+                </ul>
+            </nav>
+            <div style="padding: 60px; text-align: center; color: #333;">
+                <h2>Unlock the Final Stage</h2>
+                <p>Fix the menu and button to finish your training.</p>
+                <button class="cta-button">Hover over me!</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="editor-container">
+        <div class="editor-header"><span>navigation.css</span></div>
+        <textarea id="code-input">
+/* 1. Remove bullet points from the list */
+ul {
+  list-style-type: disc;
+}
+
+/* 2. Make the list items side-by-side */
+#nav-list {
+  display: block;
+}
+
+/* 3. Add a gold hover effect to the button */
+.cta-button:hover {
+  background: gray;
+}</textarea>
+        <div class="controls">
+            <div id="status-area">
+                <span id="success-msg"><span class="star">⭐</span>🏆 MISSION COMPLETE!</span>
+                <span id="error-msg">Check the requirements! The menu needs to be horizontal.</span>
+            </div>
+            <button id="run-btn" onclick="runCode()">RUN CODE</button>
+            <button id="finish-btn" onclick="completeGame()">FINISH GAME 🏁</button>
+        </div>
+    </div>
+
+    <div id="overlay" onclick="toggleModal()"></div>
+    <div id="modal">
+        <h3>Client Requirements - Stage 3</h3>
+        <p>The navigation menu looks like a bulleted list. It needs to be a professional header!</p>
+        <ul>
+            <li>Remove the <strong>bullet points</strong> (list-style-type).</li>
+            <li>Make the <strong>#nav-list</strong> display as <strong>flex</strong>.</li>
+            <li>Change the <strong>.cta-button:hover</strong> background to <strong>gold</strong>.</li>
+        </ul>
+        <button onclick="toggleModal()" style="width:100%; margin-top:10px; cursor:pointer;">Final Mission: Start!</button>
+    </div>
+
+    <script>
+        function toggleModal() {
+            const m = document.getElementById('modal');
+            const o = document.getElementById('overlay');
+            const isVisible = m.style.display === 'block';
+            m.style.display = isVisible ? 'none' : 'block';
+            o.style.display = isVisible ? 'none' : 'block';
+        }
+
+        function runCode() {
+            const code = document.getElementById('code-input').value;
+            document.getElementById('user-styles').innerHTML = code;
+
+            // Logic to check win conditions
+            const noBullets = /list-style-type:\s*none/i.test(code);
+            const isFlex = /display:\s*flex/i.test(code);
+            // Specifically checking for the hover state logic
+            const hasHoverGold = /\.cta-button:hover\s*{[^}]*background:\s*gold/i.test(code);
+
+            if (noBullets && isFlex && hasHoverGold) {
+                document.getElementById('success-msg').style.display = 'flex';
+                document.getElementById('error-msg').style.display = 'none';
+                document.getElementById('finish-btn').style.display = 'inline-block';
+            } else {
+                document.getElementById('success-msg').style.display = 'none';
+                document.getElementById('error-msg').style.display = 'flex';
+                document.getElementById('finish-btn').style.display = 'none';
+            }
+        }
+
+        function completeGame() {
+            alert("Congratulations! You've rescued every website and completed your training. You are officially a CSS Hero!");
+            window.location.href = "index.html"; // Redirect back to start
+        }
+    </script>
+</body>
+</html>
